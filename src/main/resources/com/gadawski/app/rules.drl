@@ -1,0 +1,38 @@
+//created on: 2013-11-14
+package com.gadawski.app
+
+//list any import classes here.
+import com.gadawski.app.facts.*;
+import java.math.BigDecimal;
+
+//declare any global variables here
+
+rule "Are U rich"
+    when
+        person : Person ( cash >= 20000 )
+        car : Car (price > 2000 )
+        house : House ( price > 20000 )
+    then
+        //System.out.println( "Person have: " + person.getCash() + " so he his rich." );
+       //insert(new Person(22, BigDecimal.valuOf(200), BigDecimal.valueOf(299), true));
+end
+
+rule "Are U poor"
+    //include attributes such as "salience" here...
+    when
+        person : Person ( cash < 20000 )
+        car : Car (price == 1000 )
+        house : House ( price == 10000 )
+    then
+       	//System.out.println( "Person have: " + person.getCash() + " so he is poor." );
+//        insert(new Person(22, BigDecimal.valueOf(200), BigDecimal.valueOf(223432), true));
+end
+
+rule "propose car to rich person"
+	when 
+       	person : Person ( cash >= 20000 ) 
+		car : Car ( price <= 1210 )
+		house : House ( price > 19999 )
+	then 
+		//System.out.println( "Car: " + car.getName() + " proposed person with: " + person.getCash() + " cash.");
+end
