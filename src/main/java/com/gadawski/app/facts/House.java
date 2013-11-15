@@ -2,12 +2,50 @@ package com.gadawski.app.facts;
 
 import java.math.BigDecimal;
 
+/**
+ * @author l.gadawski@gmail.com
+ * 
+ */
 public class House {
+	/**
+	 * Min house price.
+	 */
+	public static final float sMIN_PRICE = 50000;
+	/**
+	 * Max house price.
+	 */
+	public static final float sMAX_PRICE = 1000000;
+	/**
+	 * Max house area.
+	 */
+	public static final float sMAX_AREA = 100000;
+	/**
+	 * Min house area.
+	 */
+	public static final float sMIN_AREA = 1000;
+	/**
+	 * House name.
+	 */
 	private String name;
-
+	/**
+	 * House price.
+	 */
 	private BigDecimal price;
+	/**
+	 * House area.
+	 */
 	private BigDecimal area;
 
+	/**
+	 * Construct house.
+	 * 
+	 * @param name
+	 *            - house name.
+	 * @param price
+	 *            - house price.
+	 * @param area
+	 *            - house area.
+	 */
 	public House(String name, BigDecimal price, BigDecimal area) {
 		this.setName(name);
 		this.setPrice(price);
@@ -57,26 +95,44 @@ public class House {
 		return true;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return
+	 */
 	public BigDecimal getPrice() {
 		return price;
 	}
 
+	/**
+	 * @param price
+	 */
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
+	/**
+	 * @return
+	 */
 	public BigDecimal getArea() {
 		return area;
 	}
 
+	/**
+	 * @param area
+	 */
 	public void setArea(BigDecimal area) {
 		this.area = area;
 	}

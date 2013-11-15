@@ -15,9 +15,9 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import com.gadawski.app.util.ObjectReader;
 
 /**
- * @author l.gadawski@gmail.com
+ * Simple example use of Drools with facts get from file.
  * 
- *         Simple example use of Drools with facts get from file.
+ * @author l.gadawski@gmail.com
  * 
  */
 public class ObjectsFromFileExample {
@@ -27,8 +27,8 @@ public class ObjectsFromFileExample {
 	 */
 	private static final String FILE_NAME = "generatedData.dat";
 
-	public static void main(String[] args) {
-		ObjectsFromFileExample app = new ObjectsFromFileExample();
+	public static void main(final String[] args) {
+		final ObjectsFromFileExample app = new ObjectsFromFileExample();
 		app.startInferencing();
 	}
 
@@ -51,12 +51,12 @@ public class ObjectsFromFileExample {
 		final StatefulKnowledgeSession knowledgeSession = knowledgeBase
 				.newStatefulKnowledgeSession();
 
-		List<Object> list = readObjectsFromFile();
+		final List<Object> list = readObjectsFromFile();
 		insertObjectsIntoSession(knowledgeSession, list);
 
-		long start = System.currentTimeMillis();
+		final long start = System.currentTimeMillis();
 		knowledgeSession.fireAllRules();
-		long time = System.currentTimeMillis() - start;
+		final long time = System.currentTimeMillis() - start;
 		System.err.println("Time: " + time + "ms");
 
 		knowledgeSession.dispose();
@@ -86,9 +86,10 @@ public class ObjectsFromFileExample {
 	 *            - list of object to insert.
 	 */
 	private void insertObjectsIntoSession(
-			final StatefulKnowledgeSession knowledgeSession, List<Object> list) {
-		for (Iterator<Object> it = list.iterator(); it.hasNext();) {
-			Object object = it.next();
+			final StatefulKnowledgeSession knowledgeSession,
+			final List<Object> list) {
+		for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
+			final Object object = it.next();
 			knowledgeSession.insert(object);
 		}
 	}
@@ -99,9 +100,9 @@ public class ObjectsFromFileExample {
 	 * @return List of objects from file.
 	 */
 	private static List<Object> readObjectsFromFile() {
-		InputStream inputStream = ObjectsFromFileExample.class
+		final InputStream inputStream = ObjectsFromFileExample.class
 				.getResourceAsStream("data/" + FILE_NAME);
-		List<Object> list = ObjectReader.getInputObjects(inputStream);
+		final List<Object> list = ObjectReader.getInputObjects(inputStream);
 		return list;
 	}
 }

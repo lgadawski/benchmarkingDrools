@@ -2,33 +2,74 @@ package com.gadawski.app.facts;
 
 import java.math.BigDecimal;
 
+/**
+ * Class that represents Person object.
+ * 
+ * @author l.gadawski@gmail.com
+ * 
+ */
 public class Person {
 	/**
-	 * Ranges of each attributes for generating random people.
+	 * Min age for person.
 	 */
-	public static final int MIN_AGE = 12;
-	public static final int MAX_AGE = 90;
-	public static final float MIN_INCOME = 1200;
-	public static final float MAX_INCOME = 12000;
-	public static final float MIN_CASH = 0;
-	public static final float MAX_CASH = 500000; 
-			
+	public static final int sMIN_AGE = 12;
+	/**
+	 * Max age for person.
+	 */
+	public static final int sMAX_AGE = 90;
+	/**
+	 * Min income value for person.
+	 */
+	public static final float sMIN_INCOME = 1200;
+	/**
+	 * Max income value for person.
+	 */
+	public static final float sMAX_INCOME = 12000;
+	/**
+	 * Min cash value for person.
+	 */
+	public static final float sMIN_CASH = 0;
+	/**
+	 * Max cash value for person.
+	 */
+	public static final float sMAX_CASH = 500000;
+	/**
+	 * Name of person, in files represents as sequence integer values.
+	 */
+	private String name;
+	/**
+	 * Person's age.
+	 */
 	private int age;
+	/**
+	 * Person's income.
+	 */
 	private BigDecimal income;
+	/**
+	 * Person's cash.
+	 */
 	private BigDecimal cash;
+	/**
+	 * Flag indicates if person is married.
+	 */
 	private boolean married;
 
-	public Person(int age, BigDecimal income, BigDecimal cash, boolean married) {
+	/**
+	 * Constructs Person objects.
+	 * 
+	 * @param name - name of person.
+	 * @param age - person's age.
+	 * @param income - person's income.
+	 * @param cash - person's cash.
+	 * @param married - if married?
+	 */
+	public Person(final String name, final int age, final BigDecimal income,
+			final BigDecimal cash, final boolean married) {
+		this.setName(name);
 		this.setAge(age);
 		this.setIncome(income);
 		this.setCash(cash);
 		this.setMarried(married);
-	}
-
-	@Override
-	public String toString() {
-		return "Person [age=" + age + ", income=" + income + ", cash=" + cash
-				+ ", married=" + married + "]";
 	}
 
 	@Override
@@ -39,18 +80,19 @@ public class Person {
 		result = prime * result + ((cash == null) ? 0 : cash.hashCode());
 		result = prime * result + ((income == null) ? 0 : income.hashCode());
 		result = prime * result + (married ? 1231 : 1237);
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
+	public boolean equals(final Object obj) {
 		if (this == obj)
 			return true;
 		if (obj == null)
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Person other = (Person) obj;
+		final Person other = (Person) obj;
 		if (age != other.age)
 			return false;
 		if (cash == null) {
@@ -65,39 +107,88 @@ public class Person {
 			return false;
 		if (married != other.married)
 			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
 		return true;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Person [name=" + name + ", age=" + age + ", income=" + income
+				+ ", cash=" + cash + ", married=" + married + "]";
+	}
+
+	/**
+	 * @return person age
+	 */
 	public int getAge() {
 		return age;
 	}
 
-	public void setAge(int age) {
+	/**
+	 * @param age - set person age.
+	 */
+	public void setAge(final int age) {
 		this.age = age;
 	}
 
+	/**
+	 * @return person income.
+	 */
 	public BigDecimal getIncome() {
 		return income;
 	}
 
-	public void setIncome(BigDecimal income) {
+	/**
+	 * @param income - set person income.
+	 */
+	public void setIncome(final BigDecimal income) {
 		this.income = income;
 	}
 
+	/**
+	 * @return person cash.
+	 */
 	public BigDecimal getCash() {
 		return cash;
 	}
 
-	public void setCash(BigDecimal cash) {
+	/**
+	 * @param cash
+	 */
+	public void setCash(final BigDecimal cash) {
 		this.cash = cash;
 	}
 
+	/**
+	 * @return
+	 */
 	public boolean isMarried() {
 		return married;
 	}
 
-	public void setMarried(boolean married) {
+	/**
+	 * @param married
+	 */
+	public void setMarried(final boolean married) {
 		this.married = married;
 	}
-	
+
+	/**
+	 * @return
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name
+	 */
+	public void setName(final String name) {
+		this.name = name;
+	}
+
 }

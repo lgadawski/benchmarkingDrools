@@ -2,10 +2,33 @@ package com.gadawski.app.facts;
 
 import java.math.BigDecimal;
 
+/**
+ * @author l.gadawski@gmail.com
+ *
+ */
 public class Car {
+	/**
+	 * Min car price.
+	 */
+	public static final float sMIN_PRICE = 2000;
+	/**
+	 * Max car price.
+	 */
+	public static final float sMAX_PRICE = 200000;
+	/**
+	 * Car name.
+	 */
 	private String name;
+	/**
+	 * Car price.
+	 */
 	private BigDecimal price;
 
+	/**
+	 * Construct car.
+	 * @param name - car name.
+	 * @param price - car price.
+	 */
 	public Car(String name, BigDecimal price) {
 		this.setName(name);
 		this.setPrice(price);
@@ -47,18 +70,30 @@ public class Car {
 		return true;
 	}
 
+	/**
+	 * @return
+	 */
 	public String getName() {
 		return name;
 	}
 
+	/**
+	 * @param name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 
+	/**
+	 * @return
+	 */
 	public BigDecimal getPrice() {
 		return price;
 	}
 
+	/**
+	 * @param price
+	 */
 	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}

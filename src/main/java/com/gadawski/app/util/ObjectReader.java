@@ -13,16 +13,22 @@ import com.gadawski.app.facts.Car;
 import com.gadawski.app.facts.House;
 import com.gadawski.app.facts.Person;
 
+/**
+ * Utility class responsible for reading objects from file.
+ * 
+ * @author l.gadawski@gmail.com
+ * 
+ */
 public class ObjectReader {
 
 	/**
 	 * Convert the facts from the <code>InputStream</code> to a list of objects.
 	 */
-	public static List<Object> getInputObjects(InputStream inputStream) {
-		List<Object> list = new ArrayList<Object>();
+	public static List<Object> getInputObjects(final InputStream inputStream) {
+		final List<Object> list = new ArrayList<Object>();
 
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(
+			final BufferedReader br = new BufferedReader(new InputStreamReader(
 					inputStream));
 
 			String line;
@@ -30,24 +36,24 @@ public class ObjectReader {
 				if (line.trim().length() == 0 || line.trim().startsWith(";")) {
 					continue;
 				}
-				StringTokenizer st = new StringTokenizer(line, "() ");
+				final StringTokenizer st = new StringTokenizer(line, "() ");
 
-				String type = st.nextToken();
+				final String type = st.nextToken();
 				if ("person".equals(type)) {
-					Person person = readPerson(line, st);
+					final Person person = readPerson(line, st);
 					list.add(person);
 				}
 				if ("car".equals(type)) {
-					Car car = readCar(line, st);
+					final Car car = readCar(line, st);
 					list.add(car);
 				}
 				if ("house".equals(type)) {
-					House house = readHouse(line, st);
+					final House house = readHouse(line, st);
 					list.add(house);
 				}
 			}
 			inputStream.close();
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			throw new IllegalArgumentException(
 					"Could not read inputstream properly.", e);
 		}
@@ -61,24 +67,25 @@ public class ObjectReader {
 	 * @throws IOException
 	 *             - thrown if wrong format.
 	 */
-	private static House readHouse(String line, StringTokenizer st)
+	private static House readHouse(final String line, final StringTokenizer st)
 			throws IOException {
 		if (!"name".equals(st.nextToken())) {
 			throw new IOException("expected 'name' in: " + line);
 		}
-		String name = st.nextToken();
-		
+		final String name = st.nextToken();
+
 		if (!"price".equals(st.nextToken())) {
 			throw new IOException("expected 'price' in: " + line);
 		}
-		String price = st.nextToken();
-		
+		final String price = st.nextToken();
+
 		if (!"area".equals(st.nextToken())) {
 			throw new IOException("expected 'area' in: " + line);
 		}
-		String area = st.nextToken();
-		
-		House house = new House(name, new BigDecimal(price), new BigDecimal(area));
+		final String area = st.nextToken();
+
+		final House house = new House(name, new BigDecimal(price),
+				new BigDecimal(area));
 		return house;
 	}
 
@@ -88,19 +95,19 @@ public class ObjectReader {
 	 * @throws IOException
 	 *             - thrown exception if wrong format.
 	 */
-	private static Car readCar(String line, StringTokenizer st)
+	private static Car readCar(final String line, final StringTokenizer st)
 			throws IOException {
 		if (!"name".equals(st.nextToken())) {
 			throw new IOException("expected 'name' in: " + line);
 		}
-		String name = st.nextToken();
+		final String name = st.nextToken();
 
 		if (!"price".equals(st.nextToken())) {
 			throw new IOException("expected 'price' in: " + line);
 		}
-		String price = st.nextToken();
+		final String price = st.nextToken();
 
-		Car car = new Car(name, new BigDecimal(price));
+		final Car car = new Car(name, new BigDecimal(price));
 		return car;
 	}
 
@@ -110,29 +117,34 @@ public class ObjectReader {
 	 * @throws IOException
 	 *             - thrown exception if wrong format.
 	 */
-	private static Person readPerson(String line, StringTokenizer st)
+	private static Person readPerson(final String line, final StringTokenizer st)
 			throws IOException {
+		if (!"name".equals(st.nextToken())) {
+			throw new IOException("expected 'name' in: " + line);
+		}
+		String name = st.nextToken();
+
 		if (!"age".equals(st.nextToken())) {
 			throw new IOException("expected 'age' in: " + line);
 		}
-		String age = st.nextToken();
+		final String age = st.nextToken();
 
 		if (!"income".equals(st.nextToken())) {
 			throw new IOException("expected 'income' in: " + line);
 		}
-		String income = st.nextToken();
+		final String income = st.nextToken();
 
 		if (!"cash".equals(st.nextToken())) {
 			throw new IOException("expected 'cash' in: " + line);
 		}
-		String cash = st.nextToken();
+		final String cash = st.nextToken();
 
 		if (!"married".equals(st.nextToken())) {
 			throw new IOException("expected 'married' in: " + line);
 		}
-		String married = st.nextToken();
+		final String married = st.nextToken();
 
-		Person person = new Person(Integer.parseInt(age),
+		final Person person = new Person(name, Integer.parseInt(age),
 				new BigDecimal(income), new BigDecimal(cash),
 				Boolean.parseBoolean(married));
 		return person;
