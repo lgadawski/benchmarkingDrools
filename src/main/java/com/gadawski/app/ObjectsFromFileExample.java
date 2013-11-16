@@ -21,7 +21,6 @@ import com.gadawski.app.util.ObjectReader;
  * 
  */
 public class ObjectsFromFileExample {
-
 	/**
 	 * Name of file with data for resoning.
 	 */
@@ -60,7 +59,6 @@ public class ObjectsFromFileExample {
 		System.err.println("Time: " + time + "ms");
 
 		knowledgeSession.dispose();
-
 	}
 
 	/**
