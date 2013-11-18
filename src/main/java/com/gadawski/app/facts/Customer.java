@@ -8,7 +8,9 @@ import java.math.BigDecimal;
  * @author l.gadawski@gmail.com
  * 
  */
-public class Person {
+//@Entity
+//@Table(name = "CUSTOMERS")
+public class Customer {
 	/**
 	 * Min age for person.
 	 */
@@ -34,6 +36,10 @@ public class Person {
 	 */
 	public static final float sMAX_CASH = 500000;
 	/**
+	 * Entity id.
+	 */
+	private Long id;
+	/**
 	 * Name of person, in files represents as sequence integer values.
 	 */
 	private String name;
@@ -55,15 +61,26 @@ public class Person {
 	private boolean married;
 
 	/**
+	 * For persistence.
+	 */
+	Customer() {
+	}
+
+	/**
 	 * Constructs Person objects.
 	 * 
-	 * @param name - name of person.
-	 * @param age - person's age.
-	 * @param income - person's income.
-	 * @param cash - person's cash.
-	 * @param married - if married?
+	 * @param name
+	 *            - name of person.
+	 * @param age
+	 *            - person's age.
+	 * @param income
+	 *            - person's income.
+	 * @param cash
+	 *            - person's cash.
+	 * @param married
+	 *            - if married?
 	 */
-	public Person(final String name, final int age, final BigDecimal income,
+	public Customer(final String name, final int age, final BigDecimal income,
 			final BigDecimal cash, final boolean married) {
 		this.setName(name);
 		this.setAge(age);
@@ -92,7 +109,7 @@ public class Person {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		final Person other = (Person) obj;
+		final Customer other = (Customer) obj;
 		if (age != other.age)
 			return false;
 		if (cash == null) {
@@ -117,7 +134,7 @@ public class Person {
 
 	@Override
 	public String toString() {
-		return "Person [name=" + name + ", age=" + age + ", income=" + income
+		return "Customer [name=" + name + ", age=" + age + ", income=" + income
 				+ ", cash=" + cash + ", married=" + married + "]";
 	}
 
@@ -129,7 +146,8 @@ public class Person {
 	}
 
 	/**
-	 * @param age - set person age.
+	 * @param age
+	 *            - set person age.
 	 */
 	public void setAge(final int age) {
 		this.age = age;
@@ -143,7 +161,8 @@ public class Person {
 	}
 
 	/**
-	 * @param income - set person income.
+	 * @param income
+	 *            - set person income.
 	 */
 	public void setIncome(final BigDecimal income) {
 		this.income = income;
@@ -191,4 +210,17 @@ public class Person {
 		this.name = name;
 	}
 
+	/**
+	 * @return
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

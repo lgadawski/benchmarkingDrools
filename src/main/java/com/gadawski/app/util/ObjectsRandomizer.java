@@ -13,7 +13,7 @@ import java.util.Random;
 
 import com.gadawski.app.facts.Car;
 import com.gadawski.app.facts.House;
-import com.gadawski.app.facts.Person;
+import com.gadawski.app.facts.Customer;
 
 /**
  * Utility class responsible for generating random objects to file.
@@ -34,7 +34,7 @@ public class ObjectsRandomizer {
 	/**
 	 * Number of random generated person objects in file.
 	 */
-	private static final int sNUM_OF_PEOPLE = 100000;
+	private static final int sNUM_OF_CUSTOMERS = 100000;
 	/**
 	 * Number of random generated car objects in file.
 	 */
@@ -84,7 +84,7 @@ public class ObjectsRandomizer {
 	 *             - throws if I/O exception.
 	 */
 	private static void writeToFile(final Writer writer) throws IOException {
-		writePeople(writer);
+		writeCustomers(writer);
 		writeCars(writer);
 		writeHouses(writer);
 	}
@@ -133,17 +133,17 @@ public class ObjectsRandomizer {
 	 *            - writer to write a people..
 	 * @throws IOException
 	 */
-	private static void writePeople(final Writer writer) throws IOException {
+	private static void writeCustomers(final Writer writer) throws IOException {
 		final Random random = new Random();
-		for (int i = 0; i < sNUM_OF_PEOPLE; i++) {
+		for (int i = 0; i < sNUM_OF_CUSTOMERS; i++) {
 			final int name = i;
-			final int age = randomInt(random, Person.sMIN_AGE, Person.sMAX_AGE);
+			final int age = randomInt(random, Customer.sMIN_AGE, Customer.sMAX_AGE);
 			final BigDecimal income = randomBigDecimal(random,
-					Person.sMIN_INCOME, Person.sMAX_INCOME);
-			final BigDecimal cash = randomBigDecimal(random, Person.sMIN_CASH,
-					Person.sMAX_CASH);
+					Customer.sMIN_INCOME, Customer.sMAX_INCOME);
+			final BigDecimal cash = randomBigDecimal(random, Customer.sMIN_CASH,
+					Customer.sMAX_CASH);
 			final boolean married = random.nextBoolean();
-			writer.write("(person (name " + name + ") (age " + age
+			writer.write("(customer (name " + name + ") (age " + age
 					+ ") (income " + income + ") (cash " + cash + ") (married "
 					+ married + ") )" + sLINE_SEPARATOR);
 		}

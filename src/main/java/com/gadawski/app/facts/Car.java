@@ -2,10 +2,19 @@ package com.gadawski.app.facts;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author l.gadawski@gmail.com
- *
+ * 
  */
+@Entity
+@Table(name = "CARS")
 public class Car {
 	/**
 	 * Min car price.
@@ -16,18 +25,36 @@ public class Car {
 	 */
 	public static final float sMAX_PRICE = 200000;
 	/**
+	 * Entity id.
+	 */
+	// @GeneratedValue//(generator = "increment")
+	// @GenericGenerator(name = "increment", strategy = "increment")
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
+	/**
 	 * Car name.
 	 */
 	private String name;
 	/**
 	 * Car price.
 	 */
+	@Column(name = "price", scale = 2)
 	private BigDecimal price;
 
 	/**
+	 * For persistence.
+	 */
+	public Car() {
+	}
+
+	/**
 	 * Construct car.
-	 * @param name - car name.
-	 * @param price - car price.
+	 * 
+	 * @param name
+	 *            - car name.
+	 * @param price
+	 *            - car price.
 	 */
 	public Car(String name, BigDecimal price) {
 		this.setName(name);
@@ -96,5 +123,19 @@ public class Car {
 	 */
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	/**
+	 * @return
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 }

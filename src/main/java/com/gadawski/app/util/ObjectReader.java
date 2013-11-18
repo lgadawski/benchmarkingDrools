@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
 
 import com.gadawski.app.facts.Car;
 import com.gadawski.app.facts.House;
-import com.gadawski.app.facts.Person;
+import com.gadawski.app.facts.Customer;
 
 /**
  * Utility class responsible for reading objects from file.
@@ -39,9 +39,9 @@ public class ObjectReader {
 				final StringTokenizer st = new StringTokenizer(line, "() ");
 
 				final String type = st.nextToken();
-				if ("person".equals(type)) {
-					final Person person = readPerson(line, st);
-					list.add(person);
+				if ("customer".equals(type)) {
+					final Customer customer = readCustomer(line, st);
+					list.add(customer);
 				}
 				if ("car".equals(type)) {
 					final Car car = readCar(line, st);
@@ -55,7 +55,7 @@ public class ObjectReader {
 			inputStream.close();
 		} catch (final IOException e) {
 			throw new IllegalArgumentException(
-					"Could not read inputstream properly.", e);
+					Messages.CANT_READ_STREAM, e);
 		}
 
 		return list;
@@ -117,7 +117,7 @@ public class ObjectReader {
 	 * @throws IOException
 	 *             - thrown exception if wrong format.
 	 */
-	private static Person readPerson(final String line, final StringTokenizer st)
+	private static Customer readCustomer(final String line, final StringTokenizer st)
 			throws IOException {
 		if (!"name".equals(st.nextToken())) {
 			throw new IOException("expected 'name' in: " + line);
@@ -144,7 +144,7 @@ public class ObjectReader {
 		}
 		final String married = st.nextToken();
 
-		final Person person = new Person(name, Integer.parseInt(age),
+		final Customer person = new Customer(name, Integer.parseInt(age),
 				new BigDecimal(income), new BigDecimal(cash),
 				Boolean.parseBoolean(married));
 		return person;

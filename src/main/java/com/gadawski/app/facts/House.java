@@ -24,6 +24,10 @@ public class House {
 	 */
 	public static final float sMIN_AREA = 1000;
 	/**
+	 * Entity id.
+	 */
+	private Long id;
+	/**
 	 * House name.
 	 */
 	private String name;
@@ -35,6 +39,12 @@ public class House {
 	 * House area.
 	 */
 	private BigDecimal area;
+
+	/**
+	 * For persistence.
+	 */
+	House() {
+	}
 
 	/**
 	 * Construct house.
@@ -137,4 +147,17 @@ public class House {
 		this.area = area;
 	}
 
+	/**
+	 * @return
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
 }

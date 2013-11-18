@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import com.gadawski.app.App;
 import com.gadawski.app.ObjectsFromFileExample;
 import com.gadawski.app.util.ObjectsRandomizer;
 
@@ -84,6 +85,14 @@ public class MainWindow {
 			}
 		});
 		panel.add(btnGenerateRandomData);
+		
+		JButton btnSaveObjTo = new JButton("Save obj to DB");
+		btnSaveObjTo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				App.main(null);
+			}
+		});
+		panel.add(btnSaveObjTo);
 		panel.add(btnClose);
 	}
 }
