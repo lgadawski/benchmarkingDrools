@@ -1,5 +1,6 @@
 package com.gadawski.app.facts;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 import javax.persistence.Column;
@@ -15,7 +16,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "CARS")
-public class Car {
+public class Car implements Serializable {
 	/**
 	 * Min car price.
 	 */
@@ -25,13 +26,16 @@ public class Car {
 	 */
 	public static final float sMAX_PRICE = 200000;
 	/**
+	 * Serial version UID
+	 */
+	private static final long serialVersionUID = 5536636575625460686L;
+	/**
 	 * Entity id.
 	 */
-	// @GeneratedValue//(generator = "increment")
-	// @GenericGenerator(name = "increment", strategy = "increment")
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", updatable = false, nullable = false)
+	private Long id = null;
 	/**
 	 * Car name.
 	 */
@@ -59,6 +63,18 @@ public class Car {
 	public Car(String name, BigDecimal price) {
 		this.setName(name);
 		this.setPrice(price);
+	}
+
+	/**
+	 * Creates example car object.
+	 * 
+	 * @return example car object.
+	 */
+	public static Car createExampleObject() {
+		Car car = new Car();
+		car.setName("volvo");
+		car.setPrice(BigDecimal.valueOf(1324));
+		return car;
 	}
 
 	@Override
@@ -138,4 +154,5 @@ public class Car {
 	public void setId(Long id) {
 		this.id = id;
 	}
+
 }

@@ -2,7 +2,7 @@
 
 #folder
 src/main/resources/org/drools/
-src/main/resources/META-INF/
+#src/main/resources/META-INF/
 #src/main/resources/logback.xml
 src/main/java/org/drools/
 

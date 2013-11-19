@@ -2,14 +2,21 @@ package com.gadawski.app.facts;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Class that represents Person object.
  * 
  * @author l.gadawski@gmail.com
  * 
  */
-//@Entity
-//@Table(name = "CUSTOMERS")
+@Entity
+@Table(name = "CUSTOMERS")
 public class Customer {
 	/**
 	 * Min age for person.
@@ -38,6 +45,9 @@ public class Customer {
 	/**
 	 * Entity id.
 	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	/**
 	 * Name of person, in files represents as sequence integer values.
@@ -50,10 +60,12 @@ public class Customer {
 	/**
 	 * Person's income.
 	 */
+	@Column(name = "income", scale = 2)
 	private BigDecimal income;
 	/**
 	 * Person's cash.
 	 */
+	@Column(name = "cash", scale = 2)
 	private BigDecimal cash;
 	/**
 	 * Flag indicates if person is married.

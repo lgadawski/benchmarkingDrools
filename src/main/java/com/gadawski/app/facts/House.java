@@ -2,10 +2,19 @@ package com.gadawski.app.facts;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * @author l.gadawski@gmail.com
  * 
  */
+@Entity
+@Table(name = "HOUSES")
 public class House {
 	/**
 	 * Min house price.
@@ -26,6 +35,9 @@ public class House {
 	/**
 	 * Entity id.
 	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id", updatable = false, nullable = false)
 	private Long id;
 	/**
 	 * House name.
@@ -34,10 +46,12 @@ public class House {
 	/**
 	 * House price.
 	 */
+	@Column(name = "price", scale = 2)
 	private BigDecimal price;
 	/**
 	 * House area.
 	 */
+	@Column(name = "area", scale = 2)
 	private BigDecimal area;
 
 	/**
