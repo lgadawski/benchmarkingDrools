@@ -13,6 +13,7 @@ import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 import com.gadawski.app.util.ObjectReader;
+import com.gadawski.util.db.EntityManagerUtil;
 
 /**
  * Simple example use of Drools with facts get from file.
@@ -76,7 +77,7 @@ public class ObjectsFromFileExample {
 	}
 
 	/**
-	 * Inserts give list to the session.
+	 * Inserts given list to the session.
 	 * 
 	 * @param knowledgeSession
 	 *            - session to insert objects.
@@ -86,10 +87,15 @@ public class ObjectsFromFileExample {
 	private void insertObjectsIntoSession(
 			final StatefulKnowledgeSession knowledgeSession,
 			final List<Object> list) {
+	    EntityManagerUtil entityManagerUtil = new EntityManagerUtil();
 		for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
 			final Object object = it.next();
+			entityManagerUtil.beginTransaction();
+			entityManagerUtil.persist(object);
+			entityManagerUtil.commitTransaction();
 			knowledgeSession.insert(object);
 		}
+		entityManagerUtil.close();
 	}
 
 	/**

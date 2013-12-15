@@ -47,8 +47,8 @@ public class Customer {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id;
+	@Column(name = "CustomerID", unique = true, updatable = false, nullable = false)
+	private Long customerID;
 	/**
 	 * Name of person, in files represents as sequence integer values.
 	 */
@@ -226,13 +226,13 @@ public class Customer {
 	 * @return
 	 */
 	public Long getId() {
-		return id;
+		return customerID;
 	}
 
 	/**
 	 * @param id
 	 */
 	public void setId(Long id) {
-		this.id = id;
+		this.customerID = id;
 	}
 }

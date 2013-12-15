@@ -34,15 +34,18 @@ public class ObjectsRandomizer {
 	/**
 	 * Number of random generated person objects in file.
 	 */
-	private static final int sNUM_OF_CUSTOMERS = 100000;
+//	private static final int sNUM_OF_CUSTOMERS = 100000;
+	private static final int sNUM_OF_CUSTOMERS = 20;
 	/**
 	 * Number of random generated car objects in file.
 	 */
-	private static final int sNUM_OF_CARS = 50000;
+//	private static final int sNUM_OF_CARS = 50000;
+	private static final int sNUM_OF_CARS = 20;
 	/**
 	 * Number of random generated house objects in file.
 	 */
-	private static final int sNUM_OF_HOUSES = 50000;
+//	private static final int sNUM_OF_HOUSES = 50000;
+	private static final int sNUM_OF_HOUSES = 20;
 
 	/**
 	 * Generates data to file.
@@ -55,6 +58,7 @@ public class ObjectsRandomizer {
 		try {
 			// TODO handle wrong resource path, gets null pointer exception
 			// when resource path is invalid!
+		    //null pointer exception if file doesn't exists, fix it!
 			final URL url = ObjectsRandomizer.class.getResource("../" + path);
 			final File file = new File(url.toURI().getPath());
 			writer = new BufferedWriter(new OutputStreamWriter(

@@ -37,8 +37,8 @@ public class House {
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id", updatable = false, nullable = false)
-	private Long id;
+	@Column(name = "HouseID", unique = true, updatable = false, nullable = false)
+	private Long houseID;
 	/**
 	 * House name.
 	 */
@@ -165,13 +165,13 @@ public class House {
 	 * @return
 	 */
 	public Long getId() {
-		return id;
+		return houseID;
 	}
 
 	/**
 	 * @param id
 	 */
 	public void setId(Long id) {
-		this.id = id;
+		this.houseID = id;
 	}
 }
