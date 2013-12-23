@@ -1,5 +1,8 @@
 package com.gadawski.app;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Iterator;
 import java.util.List;
@@ -12,7 +15,8 @@ import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
 
-import com.gadawski.app.util.ObjectReader;
+import com.gadawski.app.gui.MainWindow;
+import com.gadawski.util.ObjectReader;
 import com.gadawski.util.db.EntityManagerUtil;
 
 /**
@@ -22,90 +26,100 @@ import com.gadawski.util.db.EntityManagerUtil;
  * 
  */
 public class ObjectsFromFileExample {
-	/**
-	 * Name of file with data for resoning.
-	 */
-	private static final String FILE_NAME = "generatedData.dat";
+    /**
+     * Name of file with data for resoning.
+     */
+    private static final String FILE_NAME = "generatedData.dat";
 
-	public static void main(final String[] args) {
-		final ObjectsFromFileExample app = new ObjectsFromFileExample();
-		app.startInferencing();
-	}
+    public static void main(final String[] args) {
+        final ObjectsFromFileExample app = new ObjectsFromFileExample();
+        app.startInferencing();
+    }
 
-	/**
-	 * Create all possible artifact for reasoning and fires all rules.
-	 */
-	public void startInferencing() {
-		final KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory
-				.newKnowledgeBuilder();
-		knowledgeBuilder.add(ResourceFactory.newClassPathResource("rules.drl",
-				ObjectsFromFileExample.class), ResourceType.DRL);
+    /**
+     * Create all possible artifact for reasoning and fires all rules.
+     */
+    public void startInferencing() {
+        final KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory
+                .newKnowledgeBuilder();
+        knowledgeBuilder.add(ResourceFactory.newClassPathResource("rules.drl",
+                ObjectsFromFileExample.class), ResourceType.DRL);
 
-		final KnowledgeBase knowledgeBase = KnowledgeBaseFactory
-				.newKnowledgeBase();
-		knowledgeBase.addKnowledgePackages(knowledgeBuilder
-				.getKnowledgePackages());
+        final KnowledgeBase knowledgeBase = KnowledgeBaseFactory
+                .newKnowledgeBase();
+        knowledgeBase.addKnowledgePackages(knowledgeBuilder
+                .getKnowledgePackages());
 
-		checkKnowledgeForErrors(knowledgeBuilder);
+        checkKnowledgeForErrors(knowledgeBuilder);
 
-		final StatefulKnowledgeSession knowledgeSession = knowledgeBase
-				.newStatefulKnowledgeSession();
+        final StatefulKnowledgeSession knowledgeSession = knowledgeBase
+                .newStatefulKnowledgeSession();
 
-		final List<Object> list = readObjectsFromFile();
-		insertObjectsIntoSession(knowledgeSession, list);
+        final List<Object> list = readObjectsFromFile();
+        
+        final long start = System.currentTimeMillis();
+        
+        insertObjectsIntoSession(knowledgeSession, list);
+        knowledgeSession.fireAllRules();
+        
+        final long time = System.currentTimeMillis() - start;
+        System.err.println("Total time: " + time + "ms");
 
-		final long start = System.currentTimeMillis();
-		knowledgeSession.fireAllRules();
-		final long time = System.currentTimeMillis() - start;
-		System.err.println("Time: " + time + "ms");
+        knowledgeSession.dispose();
+    }
 
-		knowledgeSession.dispose();
-	}
+    /**
+     * Checks {@link KnowledgeBuilder} for errors, if so throws
+     * {@link RuntimeException} exception.
+     * 
+     * @param knowledgeBuilder
+     *            - knowledge to check.
+     */
+    private void checkKnowledgeForErrors(final KnowledgeBuilder knowledgeBuilder) {
+        if (knowledgeBuilder.hasErrors()) {
+            throw new RuntimeException("Compilation error.\n"
+                    + knowledgeBuilder.getErrors().toString());
+        }
+    }
 
-	/**
-	 * Checks {@link KnowledgeBuilder} for errors, if so throws
-	 * {@link RuntimeException} exception.
-	 * 
-	 * @param knowledgeBuilder
-	 *            - knowledge to check.
-	 */
-	private void checkKnowledgeForErrors(final KnowledgeBuilder knowledgeBuilder) {
-		if (knowledgeBuilder.hasErrors()) {
-			throw new RuntimeException("Compilation error.\n"
-					+ knowledgeBuilder.getErrors().toString());
-		}
-	}
+    /**
+     * Inserts given list to the session.
+     * 
+     * @param knowledgeSession
+     *            - session to insert objects.
+     * @param list
+     *            - list of object to insert.
+     */
+    private void insertObjectsIntoSession(
+            final StatefulKnowledgeSession knowledgeSession,
+            final List<Object> list) {
+        EntityManagerUtil entityManagerUtil = new EntityManagerUtil();
+        for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
+            final Object object = it.next();
+            entityManagerUtil.beginTransaction();
+            entityManagerUtil.persist(object);
+            entityManagerUtil.commitTransaction();
+            knowledgeSession.insert(object);
+        }
+        entityManagerUtil.close();
+    }
 
-	/**
-	 * Inserts given list to the session.
-	 * 
-	 * @param knowledgeSession
-	 *            - session to insert objects.
-	 * @param list
-	 *            - list of object to insert.
-	 */
-	private void insertObjectsIntoSession(
-			final StatefulKnowledgeSession knowledgeSession,
-			final List<Object> list) {
-	    EntityManagerUtil entityManagerUtil = new EntityManagerUtil();
-		for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
-			final Object object = it.next();
-			entityManagerUtil.beginTransaction();
-			entityManagerUtil.persist(object);
-			entityManagerUtil.commitTransaction();
-			knowledgeSession.insert(object);
-		}
-		entityManagerUtil.close();
-	}
-
-	/**
-	 * Through InputStream reads all objects from file_name.
-	 * 
-	 * @return List of objects from file.
-	 */
-	private static List<Object> readObjectsFromFile() {
-		final InputStream inputStream = ObjectsFromFileExample.class
-				.getResourceAsStream("data/" + FILE_NAME);
+    /**
+     * Through InputStream reads all objects from file_name.
+     * 
+     * @return List of objects from file.
+     */
+    private static List<Object> readObjectsFromFile() {
+//		final InputStream inputStream = ObjectsFromFileExample.class
+//				.getResourceAsStream("data/" + FILE_NAME);
+        File file = new File(MainWindow.path);
+	    InputStream inputStream = null;
+        try {
+            inputStream = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 		final List<Object> list = ObjectReader.getInputObjects(inputStream);
 		return list;
 	}

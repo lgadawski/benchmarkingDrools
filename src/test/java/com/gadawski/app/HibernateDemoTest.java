@@ -9,9 +9,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gadawski.app.facts.Car;
-import com.gadawski.app.util.db.HibernateUtil;
 import com.gadawski.util.db.EntityManagerUtil;
+import com.gadawski.util.db.HibernateUtil;
+import com.gadawski.util.facts.Car;
 
 /**
  * @author <a href="mailto:lincolnbaxter@gmail.com">Lincoln Baxter, III</a>

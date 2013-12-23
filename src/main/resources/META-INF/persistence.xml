@@ -9,11 +9,11 @@
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 
         <!-- This is where we tell JPA/Hibernate about our @Entity objects -->
-        <class>com.gadawski.app.facts.Car</class>
-        <class>com.gadawski.app.facts.Customer</class>
-        <class>com.gadawski.app.facts.House</class>
-        <class>com.gadawski.app.facts.Relationship</class>
-        <class>com.gadawski.app.facts.JoinNode</class>
+        <class>com.gadawski.util.facts.Car</class>
+        <class>com.gadawski.util.facts.Customer</class>
+        <class>com.gadawski.util.facts.House</class>
+        <class>com.gadawski.util.facts.Relationship</class>
+        <class>com.gadawski.util.facts.JoinNode</class>
 
         <properties>
             <property name="javax.persistence.jdbc.driver"
@@ -28,7 +28,7 @@
             <property name="hibernate.dialect"
                 value="org.hibernate.dialect.Oracle10gDialect" />
             <property name="hibernate.hbm2ddl.auto" value="create" />
-            <property name="hibernate.show_sql" value="true" />
+            <property name="hibernate.show_sql" value="false" />
             <property name="hibernate.format_sql" value="true" />
             <!-- <property name="hibernate.transaction.flush_before_completion" 
                 value="true" /> -->
