@@ -1,0 +1,10 @@
+package com.gadawski.app.dslExample;
+
+expander exampleRule.dsl;
+
+rule "cash more than"
+
+when 
+	There is a Customer that has greater than 20
+then
+	Propose Car for Customer

@@ -1,0 +1,27 @@
+package com.gadawski.app
+
+import com.gadawski.app.facts.*;
+import java.math.BigDecimal;
+
+/**
+ *	Example rule that checks if customer has enough money 
+ *	and if there is car that can be proposed to him.
+ *	If conditions are met, car proposal is created 
+ *	and inserted into the KnowledgeSession.
+ *	
+ *	@author l.gadawski@gmail.com
+ */
+rule "example rule"
+   
+    when
+        customer : Customer ( cash >= 200000  )
+      	car : Car ( price > 20000 && price < 150000 )
+    
+    then
+        System.out.println( 
+        "A car could be proposed to customer: " + customer.getName() );
+        insert(new CarProposal(customer, car));
+end
+
+
+ 

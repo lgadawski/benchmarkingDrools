@@ -1,19 +1,21 @@
-//created on: 2013-11-14
 package com.gadawski.app
 
-//list any import classes here.
-import com.gadawski.app.facts.*;
+import com.gadawski.util.facts.*;
 import java.math.BigDecimal;
 
-//declare any global variables here
-
+/**
+ *	Nastepujaca regula sprawdza ilosc pieniedzy, ktora posiada klient,
+ *	a takze cene obiektu typu Car oraz House. W przypadku
+ *	spelnienia warunkow nastepuje stworzenie propozycji klientowi.
+ */
 rule "Are U rich"
     when
-        person : Person ( cash >= 20000  )
-      	car : Car (price > 2000 )
+        customer : Customer ( cash >= 200000  )
+      	car : Car ( price > 2000 )
         house : House ( price > 20000 )
     then
-        //System.out.println( "A car and house could be proposed to person: " );
+        System.out.println( "to: " + customer.getName() );
+    	//insert( new Proposal(customer, car, house) );
 end
 
 
