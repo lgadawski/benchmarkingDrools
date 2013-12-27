@@ -10,7 +10,7 @@ import java.math.BigDecimal;
  */
 rule "Are U rich"
     when
-        customer : Customer ( cash >= 200000  )
+        customer : Customer ( cash >= 20000  )
       	car : Car ( price > 2000 )
         house : House ( price > 20000 )
     then

@@ -13,6 +13,7 @@ import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
+import org.drools.reteoo.JoinNode;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 import com.gadawski.app.gui.MainWindow;
@@ -27,12 +28,15 @@ import com.gadawski.util.db.EntityManagerUtil;
  */
 public class ObjectsFromFileExample {
     /**
-     * Name of file with data for resoning.
+     * @param selected
+     *            - if rule engine should use db.
      */
-    private static final String FILE_NAME = "generatedData.dat";
+    public ObjectsFromFileExample(boolean selected) {
+        JoinNode.USE_DB = selected;
+    }
 
     public static void main(final String[] args) {
-        final ObjectsFromFileExample app = new ObjectsFromFileExample();
+        final ObjectsFromFileExample app = new ObjectsFromFileExample(true);
         app.startInferencing();
     }
 
@@ -56,13 +60,15 @@ public class ObjectsFromFileExample {
                 .newStatefulKnowledgeSession();
 
         final List<Object> list = readObjectsFromFile();
-        
+
         final long start = System.currentTimeMillis();
-        
+        System.out.println("Start. Use DB: " + JoinNode.USE_DB);
+
         insertObjectsIntoSession(knowledgeSession, list);
         knowledgeSession.fireAllRules();
-        
+
         final long time = System.currentTimeMillis() - start;
+        System.out.println("End.");
         System.err.println("Total time: " + time + "ms");
 
         knowledgeSession.dispose();
@@ -93,12 +99,12 @@ public class ObjectsFromFileExample {
     private void insertObjectsIntoSession(
             final StatefulKnowledgeSession knowledgeSession,
             final List<Object> list) {
-        EntityManagerUtil entityManagerUtil = new EntityManagerUtil();
+        EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
         for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
             final Object object = it.next();
-            entityManagerUtil.beginTransaction();
-            entityManagerUtil.persist(object);
-            entityManagerUtil.commitTransaction();
+            if ( JoinNode.USE_DB ) {
+                entityManagerUtil.saveObject(object);
+            }
             knowledgeSession.insert(object);
         }
         entityManagerUtil.close();
@@ -110,17 +116,17 @@ public class ObjectsFromFileExample {
      * @return List of objects from file.
      */
     private static List<Object> readObjectsFromFile() {
-//		final InputStream inputStream = ObjectsFromFileExample.class
-//				.getResourceAsStream("data/" + FILE_NAME);
+        // final InputStream inputStream = ObjectsFromFileExample.class
+        // .getResourceAsStream("data/" + FILE_NAME);
         File file = new File(MainWindow.path);
-	    InputStream inputStream = null;
+        InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
         } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-		final List<Object> list = ObjectReader.getInputObjects(inputStream);
-		return list;
-	}
+        final List<Object> list = ObjectReader.getInputObjects(inputStream);
+        return list;
+    }
 }

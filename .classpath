@@ -10,7 +10,6 @@
 	<classpathentry kind="var" path="M2_REPO/javax/transaction/jta/1.1/jta-1.1.jar" sourcepath="M2_REPO/javax/transaction/jta/1.1/jta-1.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/mail/mail/1.4/mail-1.4.jar" sourcepath="M2_REPO/javax/mail/mail/1.4/mail-1.4-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0.jar" sourcepath="M2_REPO/javax/jcr/jcr/2.0/jcr-2.0-sources.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
 	<classpathentry kind="var" path="M2_REPO/org/drools/knowledge-api/5.5.0.Final/knowledge-api-5.5.0.Final.jar" sourcepath="M2_REPO/org/drools/knowledge-api/5.5.0.Final/knowledge-api-5.5.0.Final-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/Lukasz/.m2/repository/org/drools/knowledge-api/5.5.0.Final/knowledge-api-5.5.0.Final-javadoc.jar!/"/>
@@ -162,5 +161,6 @@
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/4.2.7.Final/hibernate-entitymanager-4.2.7.Final.jar" sourcepath="M2_REPO/org/hibernate/hibernate-entitymanager/4.2.7.Final/hibernate-entitymanager-4.2.7.Final-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/oracle/ojdbc6/11.2.0/ojdbc6-11.2.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/util"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
