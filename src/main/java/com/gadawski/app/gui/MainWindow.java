@@ -70,7 +70,7 @@ public class MainWindow {
      */
     private void initialize() {
         m_frame = new JFrame();
-        m_frame.setBounds(100, 100, 286, 257);
+        m_frame.setBounds(100, 100, 278, 263);
         m_frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         final JPanel panel = new JPanel();

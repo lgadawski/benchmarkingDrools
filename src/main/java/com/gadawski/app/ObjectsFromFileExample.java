@@ -18,6 +18,7 @@ import org.drools.runtime.StatefulKnowledgeSession;
 
 import com.gadawski.app.gui.MainWindow;
 import com.gadawski.util.ObjectReader;
+import com.gadawski.util.common.Counter;
 import com.gadawski.util.db.EntityManagerUtil;
 
 /**
@@ -35,6 +36,9 @@ public class ObjectsFromFileExample {
         JoinNode.USE_DB = selected;
     }
 
+    /**
+     * @param args
+     */
     public static void main(final String[] args) {
         final ObjectsFromFileExample app = new ObjectsFromFileExample(true);
         app.startInferencing();
@@ -59,6 +63,8 @@ public class ObjectsFromFileExample {
         final StatefulKnowledgeSession knowledgeSession = knowledgeBase
                 .newStatefulKnowledgeSession();
 
+        initilizeGlobalCounterInRule(knowledgeSession);
+
         final List<Object> list = readObjectsFromFile();
 
         final long start = System.currentTimeMillis();
@@ -72,6 +78,18 @@ public class ObjectsFromFileExample {
         System.err.println("Total time: " + time + "ms");
 
         knowledgeSession.dispose();
+    }
+
+    /**
+     * Initializes global counter in rule.
+     * 
+     * @param knowledgeSession
+     *            for which global has to be set.
+     */
+    private void initilizeGlobalCounterInRule(
+            final StatefulKnowledgeSession knowledgeSession) {
+        Counter value = new Counter(0);
+        knowledgeSession.setGlobal("counter", value);
     }
 
     /**
@@ -100,13 +118,15 @@ public class ObjectsFromFileExample {
             final StatefulKnowledgeSession knowledgeSession,
             final List<Object> list) {
         EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
+        entityManagerUtil.beginTransaction();
         for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
             final Object object = it.next();
-            if ( JoinNode.USE_DB ) {
+            if (JoinNode.USE_DB) {
                 entityManagerUtil.saveObject(object);
             }
             knowledgeSession.insert(object);
         }
+        entityManagerUtil.commitTransaction();
         entityManagerUtil.close();
     }
 

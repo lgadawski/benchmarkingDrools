@@ -27,8 +27,9 @@
             <property name="hibernate.dialect"
                 value="org.hibernate.dialect.Oracle10gDialect" />
             <property name="hibernate.hbm2ddl.auto" value="create" />
+            <property name="hibernate.jdbc.batch_size" value="50" /> <!-- improves batch processing performance -->
             <property name="hibernate.show_sql" value="false" />
-            <property name="hibernate.format_sql" value="true" />
+            <property name="hibernate.format_sql" value="false" />
             <!-- <property name="hibernate.transaction.flush_before_completion" 
                 value="true" /> -->
         </properties>
