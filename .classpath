@@ -161,6 +161,10 @@
 	<classpathentry kind="var" path="M2_REPO/org/hibernate/hibernate-entitymanager/4.2.7.Final/hibernate-entitymanager-4.2.7.Final.jar" sourcepath="M2_REPO/org/hibernate/hibernate-entitymanager/4.2.7.Final/hibernate-entitymanager-4.2.7.Final-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/com/oracle/ojdbc6/11.2.0/ojdbc6-11.2.0.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/util"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jdk1.6.0_27">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
