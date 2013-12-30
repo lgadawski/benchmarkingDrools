@@ -10,6 +10,14 @@ global com.gadawski.util.common.Counter counter;
  *	a takze cene obiektu typu Car oraz House. W przypadku
  *	spelnienia warunkow nastepuje stworzenie propozycji klientowi.
  */
+ /**
+ *	Example rule that checks if customer has enough money 
+ *	and if there is car that can be proposed to him.
+ *	If conditions are met, car proposal is created 
+ *	and inserted into the KnowledgeSession.
+ *	
+ *	@author l.gadawski@gmail.com
+ */
 rule "Are U rich"
     when
         customer : Customer ( cash >= 20000  )

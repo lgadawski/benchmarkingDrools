@@ -14,7 +14,7 @@
         <class>com.gadawski.util.facts.House</class>
         <class>com.gadawski.util.facts.Relationship</class>
         <class>com.gadawski.util.facts.JoinNode</class>
-
+    
         <properties>
             <property name="javax.persistence.jdbc.driver"
                 value="oracle.jdbc.driver.OracleDriver" />

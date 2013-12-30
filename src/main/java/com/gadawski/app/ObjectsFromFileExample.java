@@ -32,7 +32,7 @@ public class ObjectsFromFileExample {
      * @param selected
      *            - if rule engine should use db.
      */
-    public ObjectsFromFileExample(boolean selected) {
+    public ObjectsFromFileExample(final boolean selected) {
         JoinNode.USE_DB = selected;
     }
 
@@ -88,7 +88,7 @@ public class ObjectsFromFileExample {
      */
     private void initilizeGlobalCounterInRule(
             final StatefulKnowledgeSession knowledgeSession) {
-        Counter value = new Counter(0);
+        final Counter value = new Counter(0);
         knowledgeSession.setGlobal("counter", value);
     }
 
@@ -117,7 +117,7 @@ public class ObjectsFromFileExample {
     private void insertObjectsIntoSession(
             final StatefulKnowledgeSession knowledgeSession,
             final List<Object> list) {
-        EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
+        final EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
         entityManagerUtil.beginTransaction();
         for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
             final Object object = it.next();
@@ -138,12 +138,11 @@ public class ObjectsFromFileExample {
     private static List<Object> readObjectsFromFile() {
         // final InputStream inputStream = ObjectsFromFileExample.class
         // .getResourceAsStream("data/" + FILE_NAME);
-        File file = new File(MainWindow.path);
+        final File file = new File(MainWindow.path);
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(file);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
+        } catch (final FileNotFoundException e) {
             e.printStackTrace();
         }
         final List<Object> list = ObjectReader.getInputObjects(inputStream);

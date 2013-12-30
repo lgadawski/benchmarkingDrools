@@ -9,7 +9,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gadawski.util.db.EntityManagerUtil;
 import com.gadawski.util.db.HibernateUtil;
 import com.gadawski.util.facts.Car;
 
