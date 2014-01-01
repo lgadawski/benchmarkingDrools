@@ -13,6 +13,7 @@ import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
+import org.drools.marshalling.impl.ProtobufMessages.KnowledgeSession;
 import org.drools.reteoo.JoinNode;
 import org.drools.runtime.StatefulKnowledgeSession;
 
@@ -77,6 +78,16 @@ public class ObjectsFromFileExample {
         System.out.println("End.");
         System.err.println("Total time: " + time + "ms");
 
+        cleanup(knowledgeSession);
+    }
+
+    /**
+     * Disposes {@link KnowledgeSession} and cleanup {@link EntityManagerUtil}.
+     * 
+     * @param knowledgeSession
+     *            ks to dispose.
+     */
+    private void cleanup(final StatefulKnowledgeSession knowledgeSession) {
         knowledgeSession.dispose();
     }
 
@@ -117,7 +128,11 @@ public class ObjectsFromFileExample {
     private void insertObjectsIntoSession(
             final StatefulKnowledgeSession knowledgeSession,
             final List<Object> list) {
-        final EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
+        final EntityManagerUtil entityManagerUtil = EntityManagerUtil
+                .getInstance();
+        if (!entityManagerUtil.isOpen()) {
+            entityManagerUtil.createEMandInitilizeTransaction();
+        }
         entityManagerUtil.beginTransaction();
         for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
             final Object object = it.next();
