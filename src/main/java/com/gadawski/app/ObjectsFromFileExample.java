@@ -82,12 +82,42 @@ public class ObjectsFromFileExample {
     }
 
     /**
+     * Inserts given list to the session.
+     * 
+     * @param knowledgeSession
+     *            - session to insert objects.
+     * @param list
+     *            - list of object to insert.
+     */
+    private void insertObjectsIntoSession(
+            final StatefulKnowledgeSession knowledgeSession,
+            final List<Object> list) {
+        final EntityManagerUtil entityManagerUtil = EntityManagerUtil
+                .getInstance();
+        if (!entityManagerUtil.isOpen()) {
+            entityManagerUtil.createEMandInitilizeTransaction();
+        }
+        entityManagerUtil.beginTransaction();
+        for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
+            final Object object = it.next();
+            if (JoinNode.USE_DB) {
+                entityManagerUtil.saveObject(object);
+            }
+            knowledgeSession.insert(object);
+        }
+        entityManagerUtil.commitTransaction();
+//        entityManagerUtil.close();
+    }
+
+    /**
      * Disposes {@link KnowledgeSession} and cleanup {@link EntityManagerUtil}.
      * 
      * @param knowledgeSession
      *            ks to dispose.
      */
     private void cleanup(final StatefulKnowledgeSession knowledgeSession) {
+        EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
+        entityManagerUtil.close();
         knowledgeSession.dispose();
     }
 
@@ -115,34 +145,6 @@ public class ObjectsFromFileExample {
             throw new RuntimeException("Compilation error.\n"
                     + knowledgeBuilder.getErrors().toString());
         }
-    }
-
-    /**
-     * Inserts given list to the session.
-     * 
-     * @param knowledgeSession
-     *            - session to insert objects.
-     * @param list
-     *            - list of object to insert.
-     */
-    private void insertObjectsIntoSession(
-            final StatefulKnowledgeSession knowledgeSession,
-            final List<Object> list) {
-        final EntityManagerUtil entityManagerUtil = EntityManagerUtil
-                .getInstance();
-        if (!entityManagerUtil.isOpen()) {
-            entityManagerUtil.createEMandInitilizeTransaction();
-        }
-        entityManagerUtil.beginTransaction();
-        for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
-            final Object object = it.next();
-            if (JoinNode.USE_DB) {
-                entityManagerUtil.saveObject(object);
-            }
-            knowledgeSession.insert(object);
-        }
-        entityManagerUtil.commitTransaction();
-        entityManagerUtil.close();
     }
 
     /**

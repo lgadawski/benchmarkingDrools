@@ -24,6 +24,6 @@ rule "Are U rich"
       	car : Car ( price > 2000 )
         house : House ( price > 20000 )
     then
-        //System.out.println( counter.getAndIncrement() );
+        System.out.println( counter.getAndIncrement() );
 end 
  
