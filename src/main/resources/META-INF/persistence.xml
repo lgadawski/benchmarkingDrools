@@ -12,7 +12,6 @@
         <class>com.gadawski.util.facts.House</class>
         <class>com.gadawski.util.facts.Relationship</class>
         <class>com.gadawski.util.facts.JoinNode</class>
-        <class>org.drools.common.AgendaItem</class>
 
         <!-- entities are nor cached unless U explicitly mark them as cacheable -->
         <shared-cache-mode>ENABLE_SELECTIVE</shared-cache-mode>
@@ -29,10 +28,8 @@
             <property name="hibernate.format_sql" value="false" />
             <property name="hibernate.order_inserts" value="true" />
 
-            <!-- <property name="hibernate.jdbc.batch_size" value="50" /> improves batch processing performance -->
-
-            <property name="hibernate.jdbc.fetch_size" value="5000" />
-            <property name="hibernate.jdbc.batch_size" value="5000" />
+            <property name="hibernate.jdbc.fetch_size" value="1000" />
+            <property name="hibernate.jdbc.batch_size" value="1000" />
 
 <!-- 
             <property name="hibernate.cache.use_second_level_cache" value="true" />
