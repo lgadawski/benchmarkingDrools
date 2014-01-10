@@ -20,7 +20,8 @@ import org.drools.runtime.StatefulKnowledgeSession;
 import com.gadawski.app.gui.MainWindow;
 import com.gadawski.util.ObjectReader;
 import com.gadawski.util.common.Counter;
-import com.gadawski.util.db.EntityManagerUtil;
+import com.gadawski.util.db.jdbc.JdbcEntityManagerUtil;
+import com.gadawski.util.db.jpa.EntityManagerUtil;
 
 /**
  * Simple example use of Drools with facts get from file.
@@ -118,6 +119,8 @@ public class ObjectsFromFileExample {
     private void cleanup(final StatefulKnowledgeSession knowledgeSession) {
         EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
         entityManagerUtil.close();
+        JdbcEntityManagerUtil jdbcManager = JdbcEntityManagerUtil.getInstance();
+        jdbcManager.truncateAgendaItems();
         knowledgeSession.dispose();
     }
 
