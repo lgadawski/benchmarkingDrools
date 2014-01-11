@@ -73,6 +73,10 @@ public class ObjectsFromFileExample {
         System.out.println("Start. Use DB: " + JoinNode.USE_DB);
 
         insertObjectsIntoSession(knowledgeSession, list);
+        
+        final long checkpoint = System.currentTimeMillis() - start;
+        System.out.println("Objects inserted after: " + checkpoint + "ms");
+        
         knowledgeSession.fireAllRules();
 
         final long time = System.currentTimeMillis() - start;
