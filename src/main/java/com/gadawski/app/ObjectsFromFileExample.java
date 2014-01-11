@@ -14,10 +14,10 @@ import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.io.ResourceFactory;
 import org.drools.marshalling.impl.ProtobufMessages.KnowledgeSession;
-import org.drools.reteoo.JoinNode;
 import org.drools.runtime.StatefulKnowledgeSession;
 
 import com.gadawski.app.gui.MainWindow;
+import com.gadawski.drools.config.MyAppConfig;
 import com.gadawski.util.ObjectReader;
 import com.gadawski.util.common.Counter;
 import com.gadawski.util.db.jdbc.JdbcEntityManagerUtil;
@@ -35,7 +35,7 @@ public class ObjectsFromFileExample {
      *            - if rule engine should use db.
      */
     public ObjectsFromFileExample(final boolean selected) {
-        JoinNode.USE_DB = selected;
+        MyAppConfig.USE_DB = selected;
     }
 
     /**
@@ -70,7 +70,7 @@ public class ObjectsFromFileExample {
         final List<Object> list = readObjectsFromFile();
 
         final long start = System.currentTimeMillis();
-        System.out.println("Start. Use DB: " + JoinNode.USE_DB);
+        System.out.println("Start. Use DB: " + MyAppConfig.USE_DB);
 
         insertObjectsIntoSession(knowledgeSession, list);
         
@@ -105,13 +105,12 @@ public class ObjectsFromFileExample {
         entityManagerUtil.beginTransaction();
         for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
             final Object object = it.next();
-            if (JoinNode.USE_DB) {
+            if (MyAppConfig.USE_DB) {
                 entityManagerUtil.saveObject(object);
             }
             knowledgeSession.insert(object);
         }
         entityManagerUtil.commitTransaction();
-//        entityManagerUtil.close();
     }
 
     /**
