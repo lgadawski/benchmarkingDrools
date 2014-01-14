@@ -20,7 +20,7 @@ import com.gadawski.app.gui.MainWindow;
 import com.gadawski.drools.config.MyAppConfig;
 import com.gadawski.util.ObjectReader;
 import com.gadawski.util.common.Counter;
-import com.gadawski.util.db.jdbc.JdbcEntityManagerUtil;
+import com.gadawski.util.db.jdbc.JdbcAgendaItemManagerUtil;
 import com.gadawski.util.db.jpa.EntityManagerUtil;
 
 /**
@@ -122,7 +122,7 @@ public class ObjectsFromFileExample {
     private void cleanup(final StatefulKnowledgeSession knowledgeSession) {
         EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
         entityManagerUtil.close();
-        JdbcEntityManagerUtil jdbcManager = JdbcEntityManagerUtil.getInstance();
+        JdbcAgendaItemManagerUtil jdbcManager = JdbcAgendaItemManagerUtil.getInstance();
         jdbcManager.truncateAgendaItems();
         knowledgeSession.dispose();
     }

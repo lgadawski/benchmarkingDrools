@@ -20,9 +20,30 @@ global com.gadawski.util.common.Counter counter;
  */
 rule "Are U rich"
     when
-        house : House ( price > 20000 )
-      	car : Car ( price > 2000 )
         customer : Customer ( cash >= 20000  )
+        house : House ( price > 20000 )
+      //	car : Car ( price > 2000 )
     then
         System.out.println( counter.getAndIncrement() );
 end 
+
+rule "1"
+	when 
+        house : House ( price > 20000 )
+      	car : Car ( price > 2000 )
+    then
+end
+
+rule "2"
+	when 
+        customer : Customer ( cash >= 20000  )
+        house : House ( price > 20000 )
+    then
+end
+
+rule "3"
+	when 
+        customer : Customer ( cash >= 20000  )
+      	car : Car ( price > 2000 )
+    then
+end
