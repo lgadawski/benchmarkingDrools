@@ -97,20 +97,12 @@ public class ObjectsFromFileExample {
     private void insertObjectsIntoSession(
             final StatefulKnowledgeSession knowledgeSession,
             final List<Object> list) {
-        final EntityManagerUtil entityManagerUtil = EntityManagerUtil
-                .getInstance();
-        if (!entityManagerUtil.isOpen()) {
-            entityManagerUtil.createEMandInitilizeTransaction();
-        }
-        entityManagerUtil.beginTransaction();
+        JdbcAgendaItemManagerUtil jdbcManager = JdbcAgendaItemManagerUtil.getInstance();
         for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
             final Object object = it.next();
-            if (MyAppConfig.USE_DB) {
-                entityManagerUtil.saveObject(object);
-            }
             knowledgeSession.insert(object);
         }
-        entityManagerUtil.commitTransaction();
+        jdbcManager.saveAgendaItems();
     }
 
     /**
