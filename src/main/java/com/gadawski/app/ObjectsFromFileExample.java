@@ -20,7 +20,7 @@ import com.gadawski.app.gui.MainWindow;
 import com.gadawski.drools.config.MyAppConfig;
 import com.gadawski.util.ObjectReader;
 import com.gadawski.util.common.Counter;
-import com.gadawski.util.db.jdbc.JdbcAgendaItemManagerUtil;
+import com.gadawski.util.db.jdbc.JdbcManagerUtil;
 import com.gadawski.util.db.jpa.EntityManagerUtil;
 
 /**
@@ -97,12 +97,10 @@ public class ObjectsFromFileExample {
     private void insertObjectsIntoSession(
             final StatefulKnowledgeSession knowledgeSession,
             final List<Object> list) {
-        JdbcAgendaItemManagerUtil jdbcManager = JdbcAgendaItemManagerUtil.getInstance();
         for (final Iterator<Object> it = list.iterator(); it.hasNext();) {
             final Object object = it.next();
             knowledgeSession.insert(object);
         }
-        jdbcManager.saveAgendaItems();
     }
 
     /**
@@ -114,7 +112,7 @@ public class ObjectsFromFileExample {
     private void cleanup(final StatefulKnowledgeSession knowledgeSession) {
         EntityManagerUtil entityManagerUtil = EntityManagerUtil.getInstance();
         entityManagerUtil.close();
-        JdbcAgendaItemManagerUtil jdbcManager = JdbcAgendaItemManagerUtil.getInstance();
+        JdbcManagerUtil jdbcManager = JdbcManagerUtil.getInstance();
         jdbcManager.truncateAgendaItems();
         knowledgeSession.dispose();
     }
