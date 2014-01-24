@@ -18,6 +18,7 @@ global com.gadawski.util.common.Counter counter;
  *	
  *	@author l.gadawski@gmail.com
  */
+ /**/
 rule "Are U rich"
     when
         customer : Customer ( cash >= 20000  )
@@ -25,25 +26,37 @@ rule "Are U rich"
         house : House ( price > 20000 )
     then
         System.out.println( counter.getAndIncrement() );
-end 
+        modify(car) {
+        	setName( "lukaszek" ),
+        	setPrice( new BigDecimal(888));
+        };
+        System.out.println( "spoksik" );
+end
+/**/
 
+rule "1" 
+	when 
+		car : Car ( name == "lukaszek" )
+		house : House ( price > 2000 )
+	then
+		System.out.println( "luki");
+		insert(new Car("gad", new BigDecimal(888) ));
+end
+
+
+rule "2" 
+	when 
+		car : Car ( name == "gad" )
+	then
+		System.out.println( "sff" + " " + car.getPrice() );
+end
+/*
 rule "1"
 	when 
-        house : House ( price > 20000 )
-      	car : Car ( price > 2000 )
-    then
+		$car : Car()
+		//$customer : Customer()
+		CarProposal(car == $car)//, customer == $customer)  
+	then
+		System.out.println("hej");
 end
-
-rule "2"
-	when 
-        customer : Customer ( cash >= 20000  )
-        house : House ( price > 20000 )
-    then
-end
-
-rule "3"
-	when 
-        customer : Customer ( cash >= 20000  )
-      	car : Car ( price > 2000 )
-    then
-end
+*/
