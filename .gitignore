@@ -2,6 +2,8 @@
 
 #folder
 src/main/resources/org/drools/
+bin/
+target/
 #src/main/resources/META-INF/
 #src/main/resources/logback.xml
 src/main/java/org/drools/
@@ -10,3 +12,4 @@ src/main/java/org/drools/
 *.jar
 *.war
 *.ear
+/target

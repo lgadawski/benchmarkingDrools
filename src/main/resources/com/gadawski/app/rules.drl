@@ -26,10 +26,11 @@ rule "Are U rich"
         house : House ( price > 20000 )
     then
         System.out.println( counter.getAndIncrement() );
-        modify(car) {
-        	setName( "lukaszek" ),
-        	setPrice( new BigDecimal(888));
-        };
+        retract(car);
+        retract(customer);
+        retract(house);
+        insert(new Car("lukaszek", new BigDecimal(888)));
+        insert(new House("jj", new BigDecimal(3000), new BigDecimal(2000)));
         System.out.println( "spoksik" );
 end
 /**/
@@ -41,6 +42,7 @@ rule "1"
 	then
 		System.out.println( "luki");
 		insert(new Car("gad", new BigDecimal(888) ));
+		retract(house);
 end
 
 
@@ -50,13 +52,3 @@ rule "2"
 	then
 		System.out.println( "sff" + " " + car.getPrice() );
 end
-/*
-rule "1"
-	when 
-		$car : Car()
-		//$customer : Customer()
-		CarProposal(car == $car)//, customer == $customer)  
-	then
-		System.out.println("hej");
-end
-*/

@@ -3,23 +3,26 @@ package com.gadawski.app;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Properties;
 
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseFactory;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
+import org.drools.core.marshalling.impl.ProtobufMessages.KnowledgeSession;
 import org.drools.io.ResourceFactory;
-import org.drools.marshalling.impl.ProtobufMessages.KnowledgeSession;
 import org.drools.runtime.StatefulKnowledgeSession;
 
-import com.gadawski.app.gui.MainWindow;
-import com.gadawski.drools.config.MyAppConfig;
+import com.gadawski.util.Messages;
 import com.gadawski.util.ObjectReader;
 import com.gadawski.util.common.Counter;
+import com.gadawski.util.common.MyAppConfig;
 import com.gadawski.util.db.jdbc.JdbcManagerUtil;
 import com.gadawski.util.db.jpa.EntityManagerUtil;
 
@@ -30,9 +33,19 @@ import com.gadawski.util.db.jpa.EntityManagerUtil;
  * 
  */
 public class ObjectsFromFileExample {
+    private static final String VER_6_FINAL = "6.0.0.Final";
+    private static final String VER_5_FINAL = "5.5.0.Final";
+    private static final String RULES_DRL = "rules.drl";
+    private static final String DROOLS_PROPS = "drools.properties";
+
+    public static final String GENERATED_DATA_RESOURCES_PATH = "D:/_development/workspace/example/myCode/my-app/src/main/resources/com/gadawski/app/data/generatedData.dat";
+
+    private Properties props;
+
     /**
      * @param selected
      *            - if rule engine should use db.
+     * @param generatedData
      */
     public ObjectsFromFileExample(final boolean selected) {
         MyAppConfig.USE_DB = selected;
@@ -40,19 +53,74 @@ public class ObjectsFromFileExample {
 
     /**
      * @param args
+     * @throws IOException
      */
-    public static void main(final String[] args) {
+    public static void main(final String[] args) throws IOException {
         final ObjectsFromFileExample app = new ObjectsFromFileExample(true);
-        app.startInferencing();
+        app.start();
+    }
+
+    /**
+     * @throws IOException
+     */
+    public void start() throws IOException {
+        props = getProperties();
+        String value = props.getProperty("drools.version");
+        if (value != null) {
+            if (value.equals(VER_5_FINAL)) {
+                startInferencing();
+            }
+            if (value.equals(VER_6_FINAL)) {
+                startInferencingDrools6();
+            }
+        }
+        throw new IOException(Messages.CANT_LOAD_DROOLS_VERSION
+                + ", loaded value: " + value);
+    }
+
+    /**
+     * 
+     */
+    private void startInferencingDrools6() {
+        System.out.println("hello drools 6!");
+    }
+
+    /**
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    private Properties getProperties() throws FileNotFoundException,
+            IOException {
+        if (props == null) {
+            props = new Properties();
+            loadProperties();
+        }
+        return props;
+    }
+
+    /**
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
+    private void loadProperties() throws FileNotFoundException, IOException {
+        URL filePath = ObjectsFromFileExample.class.getResource(DROOLS_PROPS);
+        if (filePath == null) {
+            throw new FileNotFoundException(Messages.CANT_FIND_PROPS);
+        }
+        props.load(new FileInputStream(filePath.getPath()));
     }
 
     /**
      * Create all possible artifact for reasoning and fires all rules.
+     * 
+     * @throws FileNotFoundException
      */
-    public void startInferencing() {
+    private void startInferencing() throws FileNotFoundException {
+
         final KnowledgeBuilder knowledgeBuilder = KnowledgeBuilderFactory
                 .newKnowledgeBuilder();
-        knowledgeBuilder.add(ResourceFactory.newClassPathResource("rules.drl",
+        knowledgeBuilder.add(ResourceFactory.newClassPathResource(RULES_DRL,
                 ObjectsFromFileExample.class), ResourceType.DRL);
 
         final KnowledgeBase knowledgeBase = KnowledgeBaseFactory
@@ -67,16 +135,17 @@ public class ObjectsFromFileExample {
 
         initilizeGlobalCounterInRule(knowledgeSession);
 
-        final List<Object> list = readObjectsFromFile();
+        List<Object> list = null;
+        list = readObjectsFromFile();
 
         final long start = System.currentTimeMillis();
         System.out.println("Start. Use DB: " + MyAppConfig.USE_DB);
 
         insertObjectsIntoSession(knowledgeSession, list);
-        
+
         final long checkpoint = System.currentTimeMillis() - start;
         System.out.println("Objects inserted after: " + checkpoint + "ms");
-        
+
         knowledgeSession.fireAllRules();
 
         final long time = System.currentTimeMillis() - start;
@@ -147,18 +216,19 @@ public class ObjectsFromFileExample {
      * Through InputStream reads all objects from file_name.
      * 
      * @return List of objects from file.
+     * @throws FileNotFoundException
      */
-    private static List<Object> readObjectsFromFile() {
-        // final InputStream inputStream = ObjectsFromFileExample.class
-        // .getResourceAsStream("data/" + FILE_NAME);
-        final File file = new File(MainWindow.path);
-        InputStream inputStream = null;
-        try {
-            inputStream = new FileInputStream(file);
-        } catch (final FileNotFoundException e) {
-            e.printStackTrace();
+    private List<Object> readObjectsFromFile() throws FileNotFoundException {
+        URL resourcesPathUrl = ObjectsFromFileExample.class
+                .getResource(GENERATED_DATA_RESOURCES_PATH);
+        if (resourcesPathUrl == null) {
+            throw new FileNotFoundException(Messages.CANT_OPEN_RESOURCES_PATH);
         }
-        final List<Object> list = ObjectReader.getInputObjects(inputStream);
+        final File file = new File(GENERATED_DATA_RESOURCES_PATH);
+        InputStream inputStream = null;
+        inputStream = new FileInputStream(file);
+        ObjectReader objectReader = new ObjectReader();
+        final List<Object> list = objectReader.getInputObjects(inputStream);
         return list;
     }
 }

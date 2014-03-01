@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.gadawski.app</groupId>
     <artifactId>my-app</artifactId>
@@ -8,84 +7,73 @@
     <name>my-app</name>
     <url>http://maven.apache.org</url>
     <dependencies>
+        <dependency>
+            <groupId>com.miglayout</groupId>
+            <artifactId>miglayout</artifactId>
+            <version>3.7.4</version>
+        </dependency>
 
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>knowledge-api</artifactId>
             <version>${drools.ver}</version>
         </dependency>
-        <dependency>
-            <groupId>org.drools</groupId>
-            <artifactId>drools-core</artifactId>
-            <version>${drools.ver}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-compiler</artifactId>
             <version>${drools.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-camel</artifactId>
             <version>${drools.ver}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-flow</artifactId>
-            <version>${jbpm.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-flow-builder</artifactId>
-            <version>${jbpm.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-persistence-jpa</artifactId>
-            <version>${jbpm.version}</version>
             <exclusions>
                 <exclusion>
-                    <artifactId>hibernate-core</artifactId>
-                    <groupId>org.hibernate</groupId>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-workitems</artifactId>
-            <version>${jbpm.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-bpmn2</artifactId>
-            <version>${jbpm.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-bpmn2</artifactId>
-            <version>${jbpm.version}</version>
-            <scope>test</scope>
-            <classifier>tests</classifier>
-        </dependency>
-        <dependency>
-            <groupId>org.jbpm</groupId>
-            <artifactId>jbpm-human-task-core</artifactId>
-            <version>${jbpm.version}</version>
-        </dependency>
+
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-spring</artifactId>
             <version>${drools.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-persistence-jpa</artifactId>
             <version>${drools.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
             <artifactId>drools-ant</artifactId>
             <version>${drools.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.drools</groupId>
@@ -96,6 +84,12 @@
             <groupId>org.drools</groupId>
             <artifactId>drools-decisiontables</artifactId>
             <version>${drools.ver}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>drools-core</artifactId>
+                    <groupId>org.drools</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -114,11 +108,7 @@
             <version>1.6.4</version>
         </dependency>
 
-        <!-- <dependency> <groupId>org.apache.ibatis</groupId> <artifactId>ibatis-sqlmap</artifactId> 
-            <version>2.3.4.726</version> </dependency> <dependency> <groupId>mysql</groupId> 
-            <artifactId>mysql-connector-java</artifactId> <version>5.1.22</version> </dependency> 
-            <dependency> <groupId>commons-lang</groupId> <artifactId>commons-lang</artifactId> 
-            <version>2.6</version> </dependency> -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -146,31 +136,6 @@
             <artifactId>guava</artifactId>
             <version>15.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.jfree</groupId>
-            <artifactId>jfreechart</artifactId>
-            <version>1.0.15</version>
-        </dependency>
-        <dependency>
-            <groupId>com.miglayout</groupId>
-            <artifactId>miglayout</artifactId>
-            <version>3.5.5</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate.javax.persistence</groupId>
-            <artifactId>hibernate-jpa-2.0-api</artifactId>
-            <version>1.0.1.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>4.2.7.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>4.2.7.Final</version>
-        </dependency>
 
         <!-- ORACLE database driver -->
         <dependency>
@@ -180,6 +145,12 @@
         </dependency>
     </dependencies>
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources/com/gadawski/app</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <pluginManagement>
             <plugins>
                 <plugin>

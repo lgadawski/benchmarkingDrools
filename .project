@@ -7,7 +7,7 @@
 		<project>drools-core</project>
 		<project>drools-decisiontables</project>
 		<project>drools-templates</project>
-		<project>drools-persistence-jpa</project>
+<!--		<project>drools-persistence-jpa</project> -->
 		<project>drools-verifier</project>
 	</projects>
 	<buildSpec>
